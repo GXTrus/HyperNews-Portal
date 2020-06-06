@@ -1,0 +1,14 @@
+<h2>Hyper news</h2>
+{% regroup news|dictsortreversed:"created" by date as date_list %}
+<ul>
+    {%for date, title in date_list %}
+    <li>
+        <h4>{{date}}</h4>
+    <ul>{% for post in title %}
+        <li><a href="/news/{{post.link}}/">{{post.title}}</a></li>
+        {% endfor %}
+    </ul>
+    </li>
+    {% endfor %}
+</ul>
+<a href="/news/create/">Create</a>

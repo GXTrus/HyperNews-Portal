@@ -1,0 +1,44 @@
+
+HyperNews Portal/task/hstest/stage_test.py
+HyperNews Portal/task/hstest/exceptions.py
+HyperNews Portal/task/hstest/django_test.py
+HyperNews Portal/task/hstest/check_result.py
+.idea/frameworkLessonHistory/storage.storageData
+.idea/frameworkLessonHistory/storage.storageRecordIndex
+.idea/HyperNews Portal.iml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+course-remote-info.yaml
+HyperNews Portal/lesson-info.yaml
+requirements.txt
+test_helper.py
+course-info.yaml
+HyperNews Portal/task/hstest/test_case.py
+HyperNews Portal/task/hstest/__pycache__/test_helper.cpython-38.pyc
+HyperNews Portal/task/hstest/__pycache__/test_case.cpython-38.pyc
+HyperNews Portal/task/hstest/__pycache__/stage_test.cpython-38.pyc
+HyperNews Portal/task/hstest/__pycache__/exceptions.cpython-38.pyc
+HyperNews Portal/task/hstest/__pycache__/django_test.cpython-38.pyc
+HyperNews Portal/task/hstest/__pycache__/check_result.cpython-38.pyc
+Problems/Colors/colors.json
+Problems/Colors/task-info.yaml
+Problems/Colors/task-remote-info.yaml
+Problems/Colors/task.html
+Problems/Colors/task.py
+Problems/lesson-info.yaml
+Problems/Years and years/task-info.yaml
+Problems/Years and years/task-remote-info.yaml
+Problems/Years and years/task.html
+Problems/Years and years/task.py
+HyperNews Portal/task/hypernews/news/__pycache__/__init__.cpython-38.pyc
+HyperNews Portal/task/hypernews/news/__pycache__/views.cpython-38.pyc
+HyperNews Portal/task/hypernews/news/__pycache__/views.cpython-38.pyc
+HyperNews Portal/task/hypernews/news/__pycache__/__init__.cpython-38.pyc
+HyperNews Portal/task/hypernews/hypernews/__pycache__/wsgi.cpython-38.pyc
+HyperNews Portal/task/hypernews/hypernews/__pycache__/urls.cpython-38.pyc
+HyperNews Portal/task/hypernews/hypernews/__pycache__/settings.cpython-38.pyc
+*.pyc
+HyperNews Portal/The news page/task-remote-info.yaml

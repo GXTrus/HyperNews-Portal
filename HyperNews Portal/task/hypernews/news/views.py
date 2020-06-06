@@ -1,7 +1,9 @@
+import datetime
 import json
 
 from django.conf import settings
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.views import View
 
 
@@ -10,14 +12,27 @@ from django.views import View
 class WelcomeView(View):
     def get(self, request, *args, **kwargs):
         response = 'Coming soon'
-        response += '<div><a href="/news" target="_blank">News</a>'
+        response += '<h2>Hyper news</h2>'
+        response += '<div><a href="/news/">News</a>'
         return HttpResponse(response)
 
 
 class NewsView(View):
     def get(self, request, *args, **kwargs):
-        response = 'Coming soon'
-        return HttpResponse(response)
+        with open(settings.NEWS_JSON_PATH, "r") as json_news:
+            news = json.load(json_news)
+        for post_ in news:
+            post_['date'] = post_['created'].split()[0]
+        return render(request, 'news/news.html', context={'news': news, })
+
+
+class News2View(View):
+    def get(self, request, *args, **kwargs):
+        with open(settings.NEWS_JSON_PATH, "r") as json_news:
+            news = json.load(json_news)
+        for post_ in news:
+            post_['datetime'] = datetime.datetime.strptime(post_['created'], "%Y-%m-%d %H:%M:%S")
+        return render(request, 'news/news2.html', context={'news': news, })
 
 
 class PostView(View):
@@ -30,5 +45,5 @@ class PostView(View):
                 response = f'<h2>{post_["title"]}</h2>\n'
                 response += f'<p>{post_["created"]}</p>\n'
                 response += f'<p>{post_["text"]}</p>\n'
-                response += '<div><a href="/news/" target="_blank">News</a>'
+                response += '<div><a href="/news/">News</a>'
         return HttpResponse(response)
