@@ -45,5 +45,5 @@ class PostView(View):
                 response = f'<h2>{post_["title"]}</h2>\n'
                 response += f'<p>{post_["created"]}</p>\n'
                 response += f'<p>{post_["text"]}</p>\n'
-                response += '<div><a href="/news/">News</a>'
+                response += '<div><a href="/news/">News</a></div>'
         return HttpResponse(response)
