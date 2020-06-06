@@ -1,0 +1,10 @@
+<form method="post">{% csrf_token %}
+    <p>Title:</p>
+    <input name="title" type="text">
+    <p>Text:</p>
+    <input name="text" type="text">
+    <p>
+        <button type="submit">Submit</button>
+    </p>
+</form>
+<a href="/news/">Main page</a>
