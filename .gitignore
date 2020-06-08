@@ -42,3 +42,10 @@ HyperNews Portal/task/hypernews/hypernews/__pycache__/urls.cpython-38.pyc
 HyperNews Portal/task/hypernews/hypernews/__pycache__/settings.cpython-38.pyc
 *.pyc
 HyperNews Portal/The news page/task-remote-info.yaml
+*.pyc
+HyperNews Portal/task/hypernews/news/__pycache__/views.cpython-38.pyc
+HyperNews Portal/task/hypernews/news/__pycache__/__init__.cpython-38.pyc
+HyperNews Portal/task/hypernews/hypernews/__pycache__/wsgi.cpython-38.pyc
+HyperNews Portal/task/hypernews/hypernews/__pycache__/urls.cpython-38.pyc
+HyperNews Portal/task/hypernews/hypernews/__pycache__/settings.cpython-38.pyc
+HyperNews Portal/task/hypernews/hypernews/__pycache__/__init__.cpython-38.pyc

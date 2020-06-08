@@ -1,34 +1,90 @@
 import datetime
 import json
-import random
+from . import forms
+
 from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views import View
+import requests
+
 
 
 # Create your views here.
-def get_random(used):
-    a = random.randint(1, 999999)
-    if a in used:
-        a = get_random(used)
-    return a
+
+def TestView(request):
+    # def get(self, request, *args, **kwargs):
+    response = 'Coming soon'
+    response += '<h2>Hyper news</h2>'
+    response += '<div><a href="/news/">News</a>'
+    # return redirect('/news')
+    return HttpResponse(response)
+
 
 class WelcomeView(View):
     def get(self, request, *args, **kwargs):
         response = 'Coming soon'
         response += '<h2>Hyper news</h2>'
         response += '<div><a href="/news/">News</a>'
-        return HttpResponse(response)
+        return redirect('/news')
+        # return HttpResponse(response)
+
+
+class LatestNewsView(View):
+    def get(self, request, *args, **kwargs):
+        with open(settings.NEWS_JSON_PATH, "r") as json_news:
+            news = json.load(json_news)
+        ordered_news = news.sort('-created')
+        return HttpResponse(ordered_news)
 
 
 class NewsView(View):
     def get(self, request, *args, **kwargs):
         with open(settings.NEWS_JSON_PATH, "r") as json_news:
             news = json.load(json_news)
+        q = request.GET.get('q')
+
+        if q:
+            new_news = []
+            for post_ in news:
+                if q in post_['title']:
+                    new_news.append(post_)
+            news = new_news
         for post_ in news:
             post_['date'] = post_['created'].split()[0]
-        return render(request, 'news/news.html', context={'news': news, })
+        return render(request, 'news/news.html', context={'news': news, 'form': forms.NewsForm})
+
+    def post(self, request, *args, **kwargs):
+        params = {'q': request.POST.get('q')}
+        return redirect('/', params=params)
+        # return HttpResponse(response)
+        # return HttpResponse(line_of_cars.processing())
+        # requests.get('news/', params=params)
+
+
+def news_function(request):
+    if request.method == "POST":
+        params = {'q': request.POST.get('q')}
+        redirect_uri = request.GET.get('redirect_uri', "/home/")
+        if "redirect_uri" == request.path:
+            # avoid loops
+            redirect_uri = "/home/"
+        return redirect(redirect_uri)
+    if request.method == 'GET':
+        with open(settings.NEWS_JSON_PATH, "r") as json_news:
+            news = json.load(json_news)
+        q = request.GET.get('q')
+
+        q = request.GET.get('q')
+        if q:
+            new_news = []
+            for post_ in news:
+                if q in post_['title']:
+                    new_news.append(post_)
+            news = new_news
+        for post_ in news:
+            post_['date'] = post_['created'].split()[0]
+        return render(request, 'news/news.html', context={'news': news})
 
 
 class News2View(View):
@@ -41,29 +97,27 @@ class News2View(View):
 
 
 class PostView(View):
-    def get(self, request, post, *args, **kwargs):
+    def get(self, request, post_id, *args, **kwargs):
         with open(settings.NEWS_JSON_PATH, "r") as json_news:
             news = json.load(json_news)
-        response = ''
-        for post_ in news:
-            if str(post_['link']) == post:
-                response += f'<h2>{post_["title"]}</h2>\n'
-                response += f'<p>{post_["created"]}</p>\n'
-                response += f'<p>{post_["text"]}</p>\n'
-                response += '<div><a href="/news/">News</a></div>'
+        try:
+            q = request.GET.get('q', '')
+        except:
+            q = 'No Q'
+        response = f'{q} <br>'
+        for a in news:
+            if a['link'] == post_id:
+                response += f'<h2>{a["title"]}</h2>\n'
+                response += f'<p>{a["created"]}</p>\n'
+                response += f'<p>{a["text"]}</p>\n'
+        if response == '':
+            response += '<H1>404 Nothing Found</H1>'
+        response += '<div><a href="/news/">Main Page</a></div>'
         return HttpResponse(response)
 
 
 class CreatePostView(View):
     def get(self, request, *args, **kwargs):
-        # response = '<form method="post">{% csrf_token %}'
-        # response += '<p>Title:</p>'
-        # response += '<input type="text" name="title">'
-        # response += '<p>Text:</p>'
-        # response += '<input type="text" name="text">'
-        # response += '<p><button type="submit">Submit</button></p>'
-        # response += '</form>'
-        # return HttpResponse(response)
         return render(request, 'news/create.html')
 
     def post(self, request, *args, **kwargs):
@@ -72,11 +126,11 @@ class CreatePostView(View):
         used_links = []
         for post in news:
             used_links.append(post['link'])
-        link = get_random(used_links)
+        link = max(used_links) + 1
         title = request.POST.get('title')
         text = request.POST.get('text')
         time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        new_post_dict = { 'created': time, "text": text, "title": title, 'link': link}
+        new_post_dict = {'created': time, "text": text, "title": title, 'link': link}
         news.append(new_post_dict)
         with open("news.json", "w") as json_file:
             json.dump(news, json_file)

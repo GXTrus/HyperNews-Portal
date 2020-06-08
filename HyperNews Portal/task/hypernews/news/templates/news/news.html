@@ -1,14 +1,23 @@
 <h2>Hyper news</h2>
+<form method="get">{% csrf_token %}
+    <p>Search:</p>
+    <p><input name="q" type="text">
+        <button type="submit">Search</button>
+    </p>
+</form>
+{% if news %}
 {% regroup news|dictsortreversed:"created" by date as date_list %}
 <ul>
     {%for date, title in date_list %}
     <li>
         <h4>{{date}}</h4>
-    <ul>{% for post in title %}
-        <li><a href="/news/{{post.link}}/">{{post.title}}</a></li>
-        {% endfor %}
-    </ul>
+        <ul>{% for post in title %}
+            <li>{{post.created|slice:"-8:-3"}} <a href="{% url 'news:post_id' post.link %}">{{post.title}}</a></li>
+
+            {% endfor %}
+        </ul>
     </li>
     {% endfor %}
 </ul>
+{% endif %}
 <a href="/news/create/">Create</a>
